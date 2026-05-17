@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import { Command } from "commander";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { realpathSync } from "node:fs";
 import { openUrl, clickRef, closeTab, evaluateJs, focusTab, listTabs, pressKey, readCookies, readStorage, snapshotPage, takeScreenshot, typeRef } from "./browser.js";
 import { ensureGlassHome, getGlassHome, loadConfig, nextProfilePort, resolveProfileName, saveConfig } from "./config.js";
 import { errorToJson, GlassError } from "./errors.js";
@@ -273,6 +275,16 @@ function parseIntOption(value: string): number {
 
 export { checkNavigationPolicy };
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (isDirectCliRun()) {
   void runCli(process.argv.slice(2));
+}
+
+function isDirectCliRun(): boolean {
+  const argvPath = process.argv[1];
+  if (!argvPath) return false;
+  try {
+    return realpathSync(argvPath) === realpathSync(fileURLToPath(import.meta.url));
+  } catch {
+    return import.meta.url === `file://${argvPath}`;
+  }
 }
