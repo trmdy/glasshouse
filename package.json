@@ -1,0 +1,33 @@
+{
+  "name": "glasshouse",
+  "version": "0.1.0",
+  "description": "Local browser control plane for AI agents",
+  "type": "module",
+  "bin": {
+    "glass": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "PRD.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:integration": "GLASS_INTEGRATION=1 vitest run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.5",
+    "commander": "^12.1.0",
+    "playwright-core": "^1.54.2",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.14",
+    "typescript": "^5.8.3",
+    "vitest": "^2.1.9"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
