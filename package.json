@@ -12,7 +12,7 @@
     "PRD.md"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && chmod +x dist/cli.js",
     "prepare": "npm run build",
     "test": "vitest run",
     "test:integration": "GLASS_INTEGRATION=1 vitest run"
